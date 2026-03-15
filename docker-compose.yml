@@ -27,7 +27,7 @@ services:
       - DB_ADDRESS=db
       - DB_PORT=5432
       - DB_NAME=stark_integration
-      - JWT_SECRET_KEY=6e78a377-0bb7-464f-aa67-4254fd3bcec6
+      - ENV=sandbox
       - DEBUG=True
     command: flask run --host=0.0.0.0
 

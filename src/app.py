@@ -1,5 +1,5 @@
 from flask import Flask
-from controllers import HealthCheckController, AccountController
+from controllers import HealthCheckController, AccountController, InvoiceController
 from middlewares import (
     DatabaseMiddleware,
     LoggerMiddleware,
@@ -13,11 +13,11 @@ db = DatabaseMiddleware().init_database(app)
 LoggerMiddleware().init_logger(app)
 
 api = DocumentationMiddleware().init_docs(app)
-
 ErrorMiddleware().init_errors(app)
 
 api.register_blueprint(HealthCheckController().healthcheck_bp)
 api.register_blueprint(AccountController().account_bp)
+api.register_blueprint(InvoiceController().invoice_bp)
 
 
 @app.teardown_appcontext

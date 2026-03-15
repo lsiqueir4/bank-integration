@@ -23,22 +23,22 @@ CREATE TABLE stark_integration."AccountType" (
 CREATE TABLE stark_integration."Invoice" (
   "id" SERIAL PRIMARY KEY,
   "invoice_key" CHAR(36) NOT NULL,
-  "external_id" INTEGER UNIQUE NOT NULL,
+  "external_id" VARCHAR(255) UNIQUE,
   "payer_document_number" VARCHAR(14) NOT NULL,
   "amount" NUMERIC(10, 2) NOT NULL,
   "fee_amount" NUMERIC(10, 2),
   "name" VARCHAR(255) NOT NULL,
   "invoice_status_id" INTEGER NOT NULL,
-  "barcode" VARCHAR(255),
+  "brcode" VARCHAR(255),
   "pdf_url" VARCHAR(255),
-  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  "updated_at" TIMESTAMP NOT NULL
+  "transfer_account_key" CHAR(36),
+  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE stark_integration."Transfer" (
   "id" SERIAL PRIMARY KEY,
   "transfer_key" CHAR(36) NOT NULL,
-  "external_id" INTEGER UNIQUE NOT NULL,
+  "external_id" VARCHAR(255) UNIQUE,
   "account_id" INTEGER NOT NULL,
   "amount" NUMERIC(10, 2) NOT NULL,
   "transfer_status_id" INTEGER NOT NULL,
@@ -76,11 +76,10 @@ ALTER TABLE stark_integration."Account"
 INSERT INTO stark_integration."InvoiceStatus" ("enumerator") VALUES 
   ('created'),
   ('paid'),
-  ('credited'),
+  ('voided'),
   ('canceled'),
   ('overdue'),
-  ('expired')
-  ;
+  ('expired');
 
   INSERT INTO stark_integration."TransferStatus" ("enumerator") VALUES 
   ('created'),

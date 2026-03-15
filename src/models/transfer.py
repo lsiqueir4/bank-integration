@@ -8,7 +8,7 @@ class Transfer(BaseModel):
 
     id = Column(Integer, primary_key=True)
     transfer_key = Column(String(36), nullable=False)
-    external_id = Column(Integer, nullable=False, unique=True)
+    external_id = Column(String(255), unique=True)
     account_id = Column(
         Integer, ForeignKey("stark_integration.Account.id"), nullable=False
     )
