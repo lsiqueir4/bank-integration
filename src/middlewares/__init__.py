@@ -1,0 +1,4 @@
+from middlewares.database import DatabaseMiddleware
+from middlewares.logger import LoggerMiddleware
+from middlewares.documentation import DocumentationMiddleware
+from middlewares.error import ErrorMiddleware

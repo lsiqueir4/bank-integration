@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_local_stark_integration
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: stark_integration
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+  api:
+    build:
+      context: .
+      dockerfile: ./src/Dockerfile
+    container_name: flask_api_stark_integration
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
+      - DB_ADDRESS=db
+      - DB_PORT=5432
+      - DB_NAME=stark_integration
+      - JWT_SECRET_KEY=6e78a377-0bb7-464f-aa67-4254fd3bcec6
+      - DEBUG=True
+    command: flask run --host=0.0.0.0
+
+volumes:
+  postgres_data:

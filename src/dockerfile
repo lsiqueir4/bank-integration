@@ -1,0 +1,10 @@
+FROM python:3.12
+RUN apt-get update
+
+COPY requirements.txt /requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r /requirements.txt
+WORKDIR /app
+COPY src /app
+EXPOSE 5000
+CMD ["flask", "run", "--host=0.0.0.0"]
