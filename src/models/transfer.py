@@ -10,13 +10,11 @@ class Transfer(BaseModel):
     transfer_key = Column(String(36), nullable=False)
     external_id = Column(Integer, nullable=False, unique=True)
     account_id = Column(
-        Integer, ForeignKey('stark_integration."Account".id'), nullable=False
+        Integer, ForeignKey("stark_integration.Account.id"), nullable=False
     )
-    receiver_document_number = Column(String(14), nullable=False)
     amount = Column(Numeric(10, 2), nullable=False)
-    name = Column(String(255), nullable=False)
     transfer_status_id = Column(
-        Integer, ForeignKey('stark_integration."TransferStatus".id'), nullable=False
+        Integer, ForeignKey("stark_integration.TransferStatus.id"), nullable=False
     )
     updated_at = Column(
         DateTime,

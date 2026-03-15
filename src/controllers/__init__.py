@@ -1,2 +1,3 @@
 from controllers.base_controller import BaseController
 from controllers.healthcheck_controller import HealthCheckController
+from controllers.account_controller import AccountController

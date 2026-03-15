@@ -1,7 +1,5 @@
 from flask import Flask
-from controllers import (
-    HealthCheckController,
-)
+from controllers import HealthCheckController, AccountController
 from middlewares import (
     DatabaseMiddleware,
     LoggerMiddleware,
@@ -19,6 +17,7 @@ api = DocumentationMiddleware().init_docs(app)
 ErrorMiddleware().init_errors(app)
 
 api.register_blueprint(HealthCheckController().healthcheck_bp)
+api.register_blueprint(AccountController().account_bp)
 
 
 @app.teardown_appcontext
