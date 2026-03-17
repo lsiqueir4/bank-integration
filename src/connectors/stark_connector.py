@@ -5,12 +5,13 @@ import base64
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import ec
 from flask import current_app
+from constants import STARK_BANK_BASE_URL
 
 
 class StarkConnector:
     def __init__(self):
         self.accessId = "project/6299291431731200"
-        self.base_url = "https://sandbox.api.starkbank.com/v2"
+        self.base_url = STARK_BANK_BASE_URL
 
     def create_signature(self, body_string):
         message = (

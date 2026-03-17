@@ -1,12 +1,12 @@
 {
   "event": {
-    "created": "2026-03-15T22:17:41.675086+00:00",
-    "id": "5109908014891008",
+    "created": "2026-03-15T22:22:19.444989+00:00",
+    "id": "5476719931686912",
     "log": {
-      "authentication": "",
-      "created": "2026-03-15T22:17:41.119679+00:00",
+      "authentication": "E03566655202603152220oqM85Pz2B0i",
+      "created": "2026-03-15T22:20:15.239409+00:00",
       "errors": [],
-      "id": "5967536390668288",
+      "id": "4703778502606848",
       "invoice": {
         "amount": 15000,
         "brcode": "00020101021226890014br.gov.bcb.pix2567brcode-h.sandbox.starkinfra.com/v2/7b394ad3875f4ac1868d444bfa7fe4e25204000053039865802BR5925Stark Bank S.A. - Institu6009Sao Paulo62070503***630446F0",
@@ -14,14 +14,14 @@
         "descriptions": [],
         "discountAmount": 0,
         "discounts": [],
-        "displayDescription": "",
+        "displayDescription": "ditto",
         "due": "2026-03-17T22:17:40.576338+00:00",
         "expiration": 5097600,
         "fee": 0,
-        "fine": 2,
+        "fine": 2.0,
         "fineAmount": 0,
         "id": "5734815332564992",
-        "interest": 1,
+        "interest": 1.0,
         "interestAmount": 0,
         "link": "https://challenge-leandro-siqueira.sandbox.starkbank.com/invoicelink/7b394ad3875f4ac1868d444bfa7fe4e2",
         "metadata": {},
@@ -31,15 +31,16 @@
         "reversalDisplayDescription": "",
         "rules": [],
         "splits": [],
-        "status": "created",
+        "status": "paid",
         "tags": [
-          "97095b0c-e9e6-462a-9836-26af402d10c2"
+          "97095b0c-e9e6-462a-9836-26af402d10c2",
+          "e03566655202603152220oqm85pz2b0i"
         ],
         "taxId": "953.460.870-01",
         "transactionIds": [],
-        "updated": "2026-03-15T22:17:41.119703+00:00"
+        "updated": "2026-03-15T22:20:15.239431+00:00"
       },
-      "type": "created"
+      "type": "paid"
     },
     "subscription": "invoice",
     "workspaceId": "5470884917673984"

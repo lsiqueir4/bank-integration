@@ -27,7 +27,7 @@ services:
       - DB_ADDRESS=db
       - DB_PORT=5432
       - DB_NAME=stark_integration
-      - ENV=sandbox
+      - ENV=DEV
       - DEBUG=True
     command: flask run --host=0.0.0.0
 
