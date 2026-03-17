@@ -1,5 +1,4 @@
 import uuid
-from requests import request
 
 
 class TestAccount:
@@ -13,20 +12,23 @@ class TestAccount:
             "account_type": "payment",
         }
 
-        post_response = client.post("/account/",json=account_payload)
+        post_response = client.post("/account/", json=account_payload)
 
         assert post_response.status_code == 201
         assert post_response.get_json()["bank_code"] == account_payload["bank_code"]
         assert post_response.get_json()["branch_code"] == account_payload["branch_code"]
         assert (
-            post_response.get_json()["account_number"] == account_payload["account_number"]
+            post_response.get_json()["account_number"]
+            == account_payload["account_number"]
         )
         assert (
             post_response.get_json()["owner_document_number"]
             == account_payload["owner_document_number"]
         )
         assert post_response.get_json()["owner_name"] == account_payload["owner_name"]
-        assert post_response.get_json()["account_type"] == account_payload["account_type"]
+        assert (
+            post_response.get_json()["account_type"] == account_payload["account_type"]
+        )
         account_key = post_response.get_json()["account_key"]
         assert uuid.UUID(account_key)
 
@@ -45,7 +47,7 @@ class TestAccount:
             "account_type": "invalid_type",
         }
 
-        post_response = client.post("/account/",json=account_payload)
+        post_response = client.post("/account/", json=account_payload)
 
         assert post_response.status_code == 422
         assert (
@@ -63,7 +65,7 @@ class TestAccount:
             "account_type": "payment",
         }
 
-        post_response = client.post("/account/",json=account_payload)
+        post_response = client.post("/account/", json=account_payload)
         assert post_response.status_code == 422
         assert post_response.get_json()["message"] == "Invalid owner document number."
 
@@ -104,10 +106,10 @@ class TestAccount:
 
         for document_number in valid_document_number:
             account_payload["owner_document_number"] = document_number
-            post_response = client.post("/account/",json=account_payload)
+            post_response = client.post("/account/", json=account_payload)
             assert post_response.status_code == 201
 
         for document_number in invalid_document_number:
             account_payload["owner_document_number"] = document_number
-            post_response = client.post("/account/",json=account_payload)
+            post_response = client.post("/account/", json=account_payload)
             assert post_response.status_code == 422

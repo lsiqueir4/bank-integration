@@ -1,8 +1,8 @@
 from tests.utils.help_functions import HelpFunctions
-import requests
 import json
 import uuid
 import random
+
 
 class TestInvoice:
 
@@ -13,7 +13,7 @@ class TestInvoice:
             mock_response = json.load(f)
         invoice_key = str(uuid.uuid4())
         mock_response["invoices"][0]["tags"] = [invoice_key]
-        mock_response["invoices"][0]["id"] = str(random.randint(1,500)*50)
+        mock_response["invoices"][0]["id"] = str(random.randint(1, 500) * 50)
         HelpFunctions().mock_external_request(
             requests_mock,
             method="POST",
@@ -28,7 +28,7 @@ class TestInvoice:
                     "payer_document_number": "95346087001",
                     "name": "Teste1",
                     "amount": 15000,
-                    "invoice_key": invoice_key
+                    "invoice_key": invoice_key,
                 }
             ]
         }
@@ -48,10 +48,7 @@ class TestInvoice:
         )
         assert invoice_response["name"] == invoice_data["invoices"][0]["name"]
         assert invoice_response["brcode"] == mock_response["invoices"][0]["brcode"]
-        assert (
-            invoice_response["external_id"]
-            == mock_response["invoices"][0]["id"]
-        )
+        assert invoice_response["external_id"] == mock_response["invoices"][0]["id"]
         assert invoice_response["pdf_url"] == mock_response["invoices"][0]["pdf"]
         assert invoice_response["status"] == "created"
         assert invoice_response["brcode"] == mock_response["invoices"][0]["brcode"]

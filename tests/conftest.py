@@ -16,7 +16,11 @@ def app():
     app = create_app()
 
     app.config.update(
-        {"TESTING": True, "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:", "ENV": "TEST"}
+        {
+            "TESTING": True,
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            "ENV": "TEST",
+        }
     )
 
     with app.app_context():
