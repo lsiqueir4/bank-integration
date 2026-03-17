@@ -11,6 +11,7 @@ services:
       - "5432:5432"
     volumes:
       - ./init:/docker-entrypoint-initdb.d
+      - ./sql:/sql
   api:
     build:
       context: .
@@ -27,7 +28,7 @@ services:
       - DB_ADDRESS=db
       - DB_PORT=5432
       - DB_NAME=stark_integration
-      - ENV=DEV
+      - ENV=SANDBOX
       - DEBUG=True
     command: flask run --host=0.0.0.0
 

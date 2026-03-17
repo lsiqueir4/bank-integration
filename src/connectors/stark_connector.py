@@ -5,7 +5,7 @@ import base64
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import ec
 from flask import current_app
-from constants import STARK_BANK_BASE_URL
+from constants import STARK_BANK_BASE_URL, ENV
 
 
 class StarkConnector:
@@ -29,7 +29,7 @@ class StarkConnector:
     def do_request(self, payload: dict, method: str, url: str):
         accessTime = str(int(time.time()))
         body_string = json.dumps(payload)
-        access_signature = self.create_signature(body_string)
+        access_signature = self.create_signature(body_string) if ENV != "TEST" else ""
 
         current_app.logger.info(
             f"Making {method} request to {self.base_url + url} with payload: {payload}"

@@ -52,7 +52,7 @@ class InvoiceController(BaseController):
                         message=f"Transfer account not found: {invoice_data['transfer_account_key']}.",
                         status_code=404,
                     )
-            invoice_key = str(uuid4())
+            invoice_key = invoice_data.get("invoice_key", str(uuid4()))
             invoice = self.invoice_repository.create_invoice(
                 invoice_data=invoice_data, invoice_key=invoice_key
             )

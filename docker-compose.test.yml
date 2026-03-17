@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+
+  db_test:
+    image: postgres:16
+    container_name: postgres_test_stark_integration
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: stark_integration_test
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - ./sql:/sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d stark_integration_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api_tests:
+    build:
+      context: .
+      dockerfile: ./src/Dockerfile
+      args:
+        ENV: test
+    container_name: flask_api_tests_stark_integration
+    depends_on:
+      db_test:
+        condition: service_healthy
+    environment:
+      DB_USER: admin
+      DB_PASSWORD: admin123
+      DB_ADDRESS: db_test
+      DB_PORT: 5432
+      DB_NAME: stark_integration_test
+      ENV: TEST
+      DEBUG: "False"
+      PYTHONPATH: /app/src
+    volumes:
+      - .:/app
+    command: tail -f /dev/null

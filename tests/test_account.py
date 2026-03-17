@@ -3,7 +3,7 @@ from requests import request
 
 
 class TestAccount:
-    def test_create_account(self):
+    def test_create_account(self, client):
         account_payload = {
             "bank_code": "20018183",
             "branch_code": "0001",
@@ -13,36 +13,29 @@ class TestAccount:
             "account_type": "payment",
         }
 
-        post_response = request(
-            method="POST",
-            url="http://localhost:5000/account/",
-            json=account_payload,
-        )
+        post_response = client.post("/account/",json=account_payload)
 
         assert post_response.status_code == 201
-        assert post_response.json()["bank_code"] == account_payload["bank_code"]
-        assert post_response.json()["branch_code"] == account_payload["branch_code"]
+        assert post_response.get_json()["bank_code"] == account_payload["bank_code"]
+        assert post_response.get_json()["branch_code"] == account_payload["branch_code"]
         assert (
-            post_response.json()["account_number"] == account_payload["account_number"]
+            post_response.get_json()["account_number"] == account_payload["account_number"]
         )
         assert (
-            post_response.json()["owner_document_number"]
+            post_response.get_json()["owner_document_number"]
             == account_payload["owner_document_number"]
         )
-        assert post_response.json()["owner_name"] == account_payload["owner_name"]
-        assert post_response.json()["account_type"] == account_payload["account_type"]
-        account_key = post_response.json()["account_key"]
+        assert post_response.get_json()["owner_name"] == account_payload["owner_name"]
+        assert post_response.get_json()["account_type"] == account_payload["account_type"]
+        account_key = post_response.get_json()["account_key"]
         assert uuid.UUID(account_key)
 
-        get_response = request(
-            method="GET",
-            url=f"http://localhost:5000/account/account_key/{account_key}",
-        )
-
+        get_response = client.get(f"/account/account_key/{account_key}")
+        print(get_response.get_json())
         assert get_response.status_code == 200
-        assert get_response.json() == post_response.json()
+        assert get_response.get_json() == post_response.get_json()
 
-    def test_invalid_account_type(self):
+    def test_invalid_account_type(self, client):
         account_payload = {
             "bank_code": "20018183",
             "branch_code": "0001",
@@ -52,19 +45,15 @@ class TestAccount:
             "account_type": "invalid_type",
         }
 
-        post_response = request(
-            method="POST",
-            url="http://localhost:5000/account/",
-            json=account_payload,
-        )
-        print(post_response.json())
+        post_response = client.post("/account/",json=account_payload)
+
         assert post_response.status_code == 422
         assert (
-            post_response.json()["message"]
+            post_response.get_json()["message"]
             == '{"account_type": ["Invalid account type"]}'
         )
 
-    def test_invalid_owner_document_number(self):
+    def test_invalid_owner_document_number(self, client):
         account_payload = {
             "bank_code": "20018183",
             "branch_code": "0001",
@@ -74,15 +63,11 @@ class TestAccount:
             "account_type": "payment",
         }
 
-        post_response = request(
-            method="POST",
-            url="http://localhost:5000/account/",
-            json=account_payload,
-        )
+        post_response = client.post("/account/",json=account_payload)
         assert post_response.status_code == 422
-        assert post_response.json()["message"] == "Invalid owner document number."
+        assert post_response.get_json()["message"] == "Invalid owner document number."
 
-    def test_owner_document_number(self):
+    def test_owner_document_number(self, client):
         account_payload = {
             "bank_code": "20018183",
             "branch_code": "0001",
@@ -119,18 +104,10 @@ class TestAccount:
 
         for document_number in valid_document_number:
             account_payload["owner_document_number"] = document_number
-            post_response = request(
-                method="POST",
-                url="http://localhost:5000/account/",
-                json=account_payload,
-            )
+            post_response = client.post("/account/",json=account_payload)
             assert post_response.status_code == 201
 
         for document_number in invalid_document_number:
             account_payload["owner_document_number"] = document_number
-            post_response = request(
-                method="POST",
-                url="http://localhost:5000/account/",
-                json=account_payload,
-            )
+            post_response = client.post("/account/",json=account_payload)
             assert post_response.status_code == 422

@@ -24,6 +24,7 @@ class RequestInvoiceSchema(Schema):
             error="Invalid transfer account key format",
         ),
     )
+    invoice_key = fields.String(required=False)
 
 
 class ResponseInvoiceSchema(Schema):
@@ -32,7 +33,7 @@ class ResponseInvoiceSchema(Schema):
     name = fields.String()
     amount = fields.Decimal(as_string=True)
     fee_amount = fields.Decimal(as_string=True)
-    external_id = fields.Integer()
+    external_id = fields.String()
     pdf_url = fields.String()
     brcode = fields.String()
     transfer_account_key = fields.String()

@@ -9,5 +9,7 @@ marshmallow==4.1.0
 passlib==1.7.4
 pre-commit==2.9.2
 psycopg2-binary>=2.9.9
-requests==2.31.0
+pytest==9.0.2
+requests==2.32.5
+requests_mock==1.10.0
 SQLAlchemy==2.0.20

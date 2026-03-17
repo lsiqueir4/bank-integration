@@ -1,6 +1,16 @@
+#!/bin/bash
 set -e
 
-COMPOSE_FILE=docker-compose.yml
+ENVIRONMENT=${1:-dev}
+
+if [ "$ENVIRONMENT" = "test" ]; then
+  COMPOSE_FILE=docker-compose.test.yml
+else
+  COMPOSE_FILE=docker-compose.yml
+fi
+
+echo "🔹 Ambiente selecionado: $ENVIRONMENT"
+echo "🔹 Usando compose: $COMPOSE_FILE"
 
 echo "🔹 Parando containers e removendo volumes..."
 docker compose -f $COMPOSE_FILE down -v
