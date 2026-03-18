@@ -26,7 +26,7 @@ class StarkConnector:
 
         return access_signature
 
-    def do_request(self, payload: dict, method: str, url: str):
+    def make_request(self, payload: dict, method: str, url: str):
         accessTime = str(int(time.time()))
         body_string = json.dumps(payload)
         access_signature = self.create_signature(body_string) if ENV != "TEST" else ""
@@ -50,4 +50,4 @@ class StarkConnector:
         return request.json()
 
     def create_invoices(self, payload):
-        return self.do_request(payload, "POST", "/invoice")
+        return self.make_request(payload, "POST", "/invoice")

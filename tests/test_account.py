@@ -13,7 +13,7 @@ class TestAccount:
         }
 
         post_response = client.post("/account/", json=account_payload)
-
+        print(post_response.get_json())
         assert post_response.status_code == 201
         assert post_response.get_json()["bank_code"] == account_payload["bank_code"]
         assert post_response.get_json()["branch_code"] == account_payload["branch_code"]

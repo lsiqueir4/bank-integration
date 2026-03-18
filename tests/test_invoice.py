@@ -1,20 +1,19 @@
 from tests.utils.help_functions import HelpFunctions
-import json
 import uuid
-import random
 
 
 class TestInvoice:
+    def setup_class(self):
+        self.help_functions = HelpFunctions()
 
     def test_create_invoice(self, client, requests_mock):
+
+        account_key = self.help_functions.create_account(client)
         requests_mock.real_http = True
 
-        with open("tests/payloads/response/post_invoice.json", "r") as f:
-            mock_response = json.load(f)
         invoice_key = str(uuid.uuid4())
-        mock_response["invoices"][0]["tags"] = [invoice_key]
-        mock_response["invoices"][0]["id"] = str(random.randint(1, 500) * 50)
-        HelpFunctions().mock_external_request(
+        mock_response = self.help_functions.create_mock_invoice_response(invoice_key)
+        self.help_functions.mock_external_request(
             requests_mock,
             method="POST",
             url="https://dev.external.com/invoice",
@@ -29,6 +28,7 @@ class TestInvoice:
                     "name": "Teste1",
                     "amount": 15000,
                     "invoice_key": invoice_key,
+                    "transfer_account_key": account_key,
                 }
             ]
         }
@@ -52,7 +52,7 @@ class TestInvoice:
         assert invoice_response["pdf_url"] == mock_response["invoices"][0]["pdf"]
         assert invoice_response["status"] == "created"
         assert invoice_response["brcode"] == mock_response["invoices"][0]["brcode"]
-
+        assert invoice_response["transfer_account_key"] == account_key
         get_response = client.get(
             f"invoice/invoice_key/{invoice_key}",
             json=invoice_data,

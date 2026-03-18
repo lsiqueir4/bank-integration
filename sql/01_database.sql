@@ -20,6 +20,18 @@ CREATE TABLE stark_integration."AccountType" (
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
+CREATE TABLE stark_integration."WebhookStatus" (
+  "id" SERIAL PRIMARY KEY,
+  "enumerator" VARCHAR(100) UNIQUE NOT NULL,
+  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE stark_integration."WebhookType" (
+  "id" SERIAL PRIMARY KEY,
+  "enumerator" VARCHAR(100) UNIQUE NOT NULL,
+  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
 CREATE TABLE stark_integration."Invoice" (
   "id" SERIAL PRIMARY KEY,
   "invoice_key" CHAR(36) NOT NULL,
@@ -58,6 +70,17 @@ CREATE TABLE stark_integration."Account" (
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
+CREATE TABLE stark_integration."Webhook" (
+  "id" SERIAL PRIMARY KEY,
+  "webhook_key" CHAR(36) NOT NULL,
+  "external_id" VARCHAR(255) UNIQUE,
+  "webhook_type_id" INT,
+  "webhook_status_id" INT NOT NULL,
+  "payload" JSONB NOT NULL,
+  "failure_reason" VARCHAR(255),
+  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
 -- Foreign key constraints
 
 ALTER TABLE stark_integration."Invoice" 
@@ -71,6 +94,12 @@ ALTER TABLE stark_integration."Transfer"
 
 ALTER TABLE stark_integration."Account" 
   ADD CONSTRAINT fk_account_account_type FOREIGN KEY ("account_type_id") REFERENCES stark_integration."AccountType" ("id");
+
+ALTER TABLE stark_integration."Webhook" 
+  ADD CONSTRAINT fk_webhook_webhook_type FOREIGN KEY ("webhook_type_id") REFERENCES stark_integration."WebhookType" ("id");
+
+ALTER TABLE stark_integration."Webhook" 
+  ADD CONSTRAINT fk_webhook_status FOREIGN KEY ("webhook_status_id") REFERENCES stark_integration."WebhookStatus" ("id");
 
 -- Enumerator Insertions
 INSERT INTO stark_integration."InvoiceStatus" ("enumerator") VALUES 
@@ -93,3 +122,17 @@ INSERT INTO stark_integration."InvoiceStatus" ("enumerator") VALUES
   ('payment'),
   ('savings'),
   ('salary');
+
+    INSERT INTO stark_integration."WebhookStatus" ("enumerator") VALUES 
+  ('processed'),
+  ('failed');
+
+  INSERT INTO stark_integration."WebhookType" ("enumerator") VALUES 
+  ('invoice_created'),
+  ('invoice_paid'),
+  ('invoice_credited'),
+  ('transfer_created'),
+  ('transfer_processing'),
+  ('transfer_canceled'),
+  ('transfer_failed'),
+  ('transfer_success');

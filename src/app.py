@@ -1,5 +1,10 @@
 from flask import Flask
-from controllers import HealthCheckController, AccountController, InvoiceController
+from controllers import (
+    HealthCheckController,
+    AccountController,
+    InvoiceController,
+    WebhookController,
+)
 from middlewares import (
     DatabaseMiddleware,
     LoggerMiddleware,
@@ -24,6 +29,7 @@ def create_app(config=None):
     api.register_blueprint(HealthCheckController().healthcheck_bp)
     api.register_blueprint(AccountController().account_bp)
     api.register_blueprint(InvoiceController().invoice_bp)
+    api.register_blueprint(WebhookController().webhook_bp)
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):

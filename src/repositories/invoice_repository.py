@@ -28,6 +28,8 @@ class InvoiceRepository(BaseRepository):
         invoice.external_id = update_data["id"]
         invoice.pdf_url = update_data["pdf"]
         invoice.brcode = update_data["brcode"]
-        invoice.status = self.get_enumerator(InvoiceStatus, update_data["status"])
-
+        self.update_invoice_status(invoice, update_data["status"])
         return invoice
+
+    def update_invoice_status(self, invoice: Invoice, status):
+        invoice.status = self.get_enumerator(InvoiceStatus, status)
