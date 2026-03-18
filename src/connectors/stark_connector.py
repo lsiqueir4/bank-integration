@@ -49,5 +49,31 @@ class StarkConnector:
         )
         return request.json()
 
-    def create_invoices(self, payload):
+    def send_invoices(self, payload):
         return self.make_request(payload, "POST", "/invoice")
+
+    def send_transfers(self, payload):
+        return self.make_request(payload, "POST", "/transfer")
+
+    def create_transfer_payload(
+        self,
+        amount,
+        receiver_document_number,
+        receiver_name,
+        target_account_bank_code,
+        target_account_branch_code,
+        target_account_account_number,
+        control_key,
+        description=None,
+    ):
+        return {
+            "amount": amount,
+            "taxId": receiver_document_number,
+            "name": receiver_name,
+            "bankCode": target_account_bank_code,
+            "branchCode": target_account_branch_code,
+            "accountNumber": target_account_account_number,
+            "externalId": control_key,
+            "tags": [control_key],
+            "displayDescription": description,
+        }

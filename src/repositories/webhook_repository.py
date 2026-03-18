@@ -33,3 +33,6 @@ class WebhookRepository(BaseRepository):
 
     def get_webhook_type(self, webhook_type_enumerator):
         return self.get_enumerator(WebhookType, webhook_type_enumerator)
+
+    def get_webhook_status(self, webhook_status_enumerator):
+        return self.get_enumerator(WebhookStatus, webhook_status_enumerator)

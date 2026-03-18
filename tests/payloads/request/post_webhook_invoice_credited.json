@@ -19,7 +19,7 @@
         "expiration": 5097600,
         "fee": 0,
         "fine": 2.0,
-        "fineAmount": 0,
+        "fineAmount": 1000,
         "id": "5734815332564992",
         "interest": 1.0,
         "interestAmount": 0,

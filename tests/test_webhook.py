@@ -41,3 +41,59 @@ class TestWebhook:
         webhook_post_response = client.post("/webhook/", json=webhook_request_payload)
 
         assert webhook_post_response.status_code == 201
+
+        webhook_response = webhook_post_response.get_json()
+
+        assert webhook_response["failure_reason"] is None
+        assert uuid.UUID(webhook_response["webhook_key"])
+        assert webhook_response["external_id"] is not None
+        assert webhook_response["webhook_type"] == "invoice_created"
+        assert webhook_response["status"] == "processed"
+
+        webhook_request_payload = self.help_functions.test_webhook_request_payload(
+            invoice_key, "invoice_paid"
+        )
+
+        webhook_post_response = client.post("/webhook/", json=webhook_request_payload)
+
+        assert webhook_post_response.status_code == 201
+
+        webhook_response = webhook_post_response.get_json()
+
+        assert webhook_response["failure_reason"] is None
+        assert uuid.UUID(webhook_response["webhook_key"])
+        assert webhook_response["external_id"] is not None
+        assert webhook_response["webhook_type"] == "invoice_paid"
+        assert webhook_response["status"] == "processed"
+
+        get_invoice_response = client.get(
+            f"invoice/invoice_key/{invoice_key}",
+            json=invoice_data,
+        )
+
+        assert get_invoice_response.status_code == 200
+        assert get_invoice_response.get_json()["status"] == "paid"
+
+        webhook_request_payload = self.help_functions.test_webhook_request_payload(
+            invoice_key, "invoice_credited"
+        )
+
+        webhook_post_response = client.post("/webhook/", json=webhook_request_payload)
+
+        assert webhook_post_response.status_code == 201
+
+        webhook_response = webhook_post_response.get_json()
+
+        assert webhook_response["failure_reason"] is None
+        assert uuid.UUID(webhook_response["webhook_key"])
+        assert webhook_response["external_id"] is not None
+        assert webhook_response["webhook_type"] == "invoice_credited"
+        assert webhook_response["status"] == "processed"
+
+        get_invoice_response = client.get(
+            f"invoice/invoice_key/{invoice_key}",
+            json=invoice_data,
+        )
+
+        assert get_invoice_response.status_code == 200
+        assert get_invoice_response.get_json()["status"] == "credited"

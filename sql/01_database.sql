@@ -54,8 +54,7 @@ CREATE TABLE stark_integration."Transfer" (
   "account_id" INTEGER NOT NULL,
   "amount" NUMERIC(10, 2) NOT NULL,
   "transfer_status_id" INTEGER NOT NULL,
-  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  "updated_at" TIMESTAMP NOT NULL
+  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE stark_integration."Account" (
@@ -108,6 +107,7 @@ INSERT INTO stark_integration."InvoiceStatus" ("enumerator") VALUES
   ('voided'),
   ('canceled'),
   ('overdue'),
+  ('credited'),
   ('expired');
 
   INSERT INTO stark_integration."TransferStatus" ("enumerator") VALUES 

@@ -7,7 +7,7 @@ class AccountRepository(BaseRepository):
     def __init__(self, session):
         super().__init__(session)
 
-    def create_account(self, account_data, account_type):
+    def create_account(self, account_data, account_type) -> Account:
         new_account = Account()
         new_account.account_key = str(uuid.uuid4())
         new_account.bank_code = account_data["bank_code"]
@@ -21,10 +21,10 @@ class AccountRepository(BaseRepository):
 
         return new_account
 
-    def get_account_by_key(self, account_key):
+    def get_account_by_key(self, account_key) -> Account | None:
         return self.session.query(Account).filter_by(account_key=account_key).first()
 
-    def get_account_type(self, account_type):
+    def get_account_type(self, account_type) -> AccountType | None:
         return (
             self.session.query(AccountType).filter_by(enumerator=account_type).first()
         )

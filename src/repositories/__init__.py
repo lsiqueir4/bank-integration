@@ -2,3 +2,4 @@ from repositories.base_repository import BaseRepository
 from repositories.account_repository import AccountRepository
 from repositories.invoice_repository import InvoiceRepository
 from repositories.webhook_repository import WebhookRepository
+from repositories.transfer_repository import TransferRepository

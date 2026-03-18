@@ -6,5 +6,5 @@ class ResponseWebhookSchema(Schema):
     webhook_key = fields.String()
     external_id = fields.String()
     webhook_type = EnumField(required=False)
-    webhook_status = EnumField(required=True)
+    status = EnumField(required=True)
     failure_reason = fields.String()

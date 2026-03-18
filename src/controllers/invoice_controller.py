@@ -28,7 +28,7 @@ class InvoiceController(BaseController):
         )
         self.invoice_repository = InvoiceRepository(self.db.session)
         self.account_repository = AccountRepository(self.db.session)
-        self.invoice_connector = StarkConnector()
+        self.stark_connector = StarkConnector()
 
     @blp.arguments(RequestInvoiceListSchema)
     @blp.response(201, ResponseInvoiceListSchema)
@@ -63,14 +63,21 @@ class InvoiceController(BaseController):
 
         self.invoice_repository.session.flush()
 
-        invoices_response = self.invoice_connector.create_invoices(
+        invoices_response = self.stark_connector.send_invoices(
             {"invoices": invoices_to_send}
         )
 
         for invoice_response in invoices_response["invoices"]:
             invoice_key = invoice_response["tags"][0]
             invoice = invoice_dict[invoice_key]
-            invoice = self.invoice_repository.update_invoice(invoice, invoice_response)
+            invoice = self.invoice_repository.update_invoice(
+                invoice,
+                fee_amount=invoice_response["fee"],
+                external_id=invoice_response["id"],
+                pdf_url=invoice_response["pdf"],
+                brcode=invoice_response["brcode"],
+                status=invoice_response["status"].lower(),
+            )
 
         self.invoice_repository.session.commit()
 
