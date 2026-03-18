@@ -31,12 +31,13 @@ class ResponseInvoiceSchema(Schema):
     invoice_key = fields.String()
     payer_document_number = fields.String()
     name = fields.String()
-    amount = fields.Decimal(as_string=True)
-    fee_amount = fields.Decimal(as_string=True)
+    amount = fields.Float()
+    fee_amount = fields.Float()
     external_id = fields.String()
     pdf_url = fields.String()
     brcode = fields.String()
     transfer_account_key = fields.String()
+    transfer_key = fields.String()
     status = EnumField(required=True)
 
 

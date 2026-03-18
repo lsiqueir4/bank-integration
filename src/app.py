@@ -4,6 +4,7 @@ from controllers import (
     AccountController,
     InvoiceController,
     WebhookController,
+    TransferController,
 )
 from middlewares import (
     DatabaseMiddleware,
@@ -30,6 +31,7 @@ def create_app(config=None):
     api.register_blueprint(AccountController().account_bp)
     api.register_blueprint(InvoiceController().invoice_bp)
     api.register_blueprint(WebhookController().webhook_bp)
+    api.register_blueprint(TransferController().transfer_bp)
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):

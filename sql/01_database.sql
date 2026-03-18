@@ -44,6 +44,7 @@ CREATE TABLE stark_integration."Invoice" (
   "brcode" VARCHAR(255),
   "pdf_url" VARCHAR(255),
   "transfer_account_key" CHAR(36),
+  "transfer_key" CHAR(36),
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 

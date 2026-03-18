@@ -67,7 +67,11 @@ class InvoiceService:
                     return f"Unexpected transfer status: {transfer_response['transfers'][0]['status']}"
 
                 self.transfer_repository.update_transfer(
-                    transfer=transfer, external_id=transfer_response["transfers"][0]
+                    transfer=transfer,
+                    external_id=transfer_response["transfers"][0]["id"],
+                )
+                self.invoice_repository.update_invoice(
+                    invoice=invoice, transfer_key=transfer.transfer_key
                 )
             except Exception as e:
                 # Alert

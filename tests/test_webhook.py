@@ -74,6 +74,17 @@ class TestWebhook:
         assert get_invoice_response.status_code == 200
         assert get_invoice_response.get_json()["status"] == "paid"
 
+        create_transfer_response_payload = (
+            self.help_functions.create_mock_transfer_response(invoice_key=invoice_key)
+        )
+        self.help_functions.mock_external_request(
+            requests_mock,
+            method="POST",
+            url="https://dev.external.com/transfer",
+            json_response=create_transfer_response_payload,
+            status_code=201,
+        )
+
         webhook_request_payload = self.help_functions.test_webhook_request_payload(
             invoice_key, "invoice_credited"
         )
@@ -97,3 +108,20 @@ class TestWebhook:
 
         assert get_invoice_response.status_code == 200
         assert get_invoice_response.get_json()["status"] == "credited"
+        assert get_invoice_response.get_json()["fee_amount"] == 1000.00
+        transfer_key = get_invoice_response.get_json()["transfer_key"]
+        assert transfer_key is not None
+
+        get_transfer_response = client.get(
+            f"transfer/transfer_key/{transfer_key}",
+            json=invoice_data,
+        )
+
+        assert get_transfer_response.status_code == 200
+        assert get_transfer_response.get_json()["status"] == "created"
+        assert get_transfer_response.get_json()["transfer_key"] == transfer_key
+        assert get_transfer_response.get_json()["amount"] == 14000
+        assert (
+            get_transfer_response.get_json()["external_id"]
+            == create_transfer_response_payload["transfers"][0]["id"]
+        )

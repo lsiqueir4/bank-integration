@@ -17,7 +17,7 @@
         "displayDescription": "ditto",
         "due": "2026-03-17T22:17:40.576338+00:00",
         "expiration": 5097600,
-        "fee": 0,
+        "fee": 1000,
         "fine": 2.0,
         "fineAmount": 1000,
         "id": "5734815332564992",

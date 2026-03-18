@@ -44,3 +44,11 @@ class HelpFunctions:
         payload["event"]["log"]["invoice"]["tags"] = [invoice_key]
         payload["event"]["id"] = str(random.randint(1, 500) * 50)
         return payload
+
+    def create_mock_transfer_response(self, invoice_key):
+        with open("tests/payloads/response/post_transfer.json", "r") as f:
+            mock_response = json.load(f)
+        mock_response["transfers"][0]["externalId"] = invoice_key
+        mock_response["transfers"][0]["tags"] = [invoice_key]
+        mock_response["transfers"][0]["id"] = str(random.randint(1, 500) * 50)
+        return mock_response

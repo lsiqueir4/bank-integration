@@ -1,0 +1,34 @@
+{
+  "message": "Transfer(s) successfully created",
+  "transfers": [
+    {
+      "accountNumber": "76543-8",
+      "accountType": "checking",
+      "amount": 1000000,
+      "bankCode": "20018183",
+      "branchCode": "2201",
+      "created": "2020-02-06T16:22:24.387022+00:00",
+      "description": "Daenerys Targaryen Stormborn (594.739.480-42)",
+      "externalId": "my-external-id",
+      "fee": 0,
+      "id": "5412038532661248",
+      "name": "Daenerys Targaryen Stormborn",
+      "displayDescription": "Payment for service #1234",
+      "rules": [
+        {
+          "key": "resendingLimit",
+          "value": 5
+        }
+      ],
+      "scheduled": "2023-08-14T10:00:00+00:00",
+      "status": "created",
+      "tags": [
+        "daenerys",
+        "invoice/1234"
+      ],
+      "taxId": "594.739.480-42",
+      "transactionIds": [],
+      "updated": "2020-02-06T16:22:24.664148+00:00"
+    }
+  ]
+}

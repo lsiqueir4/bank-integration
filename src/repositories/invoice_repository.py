@@ -31,6 +31,7 @@ class InvoiceRepository(BaseRepository):
         pdf_url=None,
         brcode=None,
         status=None,
+        transfer_key=None,
     ):
         if fee_amount is not None:
             invoice.fee_amount = fee_amount
@@ -42,6 +43,8 @@ class InvoiceRepository(BaseRepository):
             invoice.brcode = brcode
         if status is not None:
             self.update_invoice_status(invoice, status=status)
+        if transfer_key:
+            invoice.transfer_key = transfer_key
         return invoice
 
     def update_invoice_status(self, invoice: Invoice, status):

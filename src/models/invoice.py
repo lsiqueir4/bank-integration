@@ -18,4 +18,5 @@ class Invoice(BaseModel):
     brcode = Column(String(255))
     name = Column(String(255), nullable=False)
     transfer_account_key = Column(String(36))
+    transfer_key = Column(String(36))
     status = relationship("InvoiceStatus")

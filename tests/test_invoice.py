@@ -41,7 +41,7 @@ class TestInvoice:
         invoice_response = post_response.get_json()["invoices"][0]
 
         assert invoice_key == invoice_response["invoice_key"]
-        assert invoice_response["amount"] == "15000.00"
+        assert invoice_response["amount"] == 15000
         assert (
             invoice_response["payer_document_number"]
             == invoice_data["invoices"][0]["payer_document_number"]

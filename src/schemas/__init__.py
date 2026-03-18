@@ -6,3 +6,4 @@ from schemas.invoice import (
     ResponseInvoiceListSchema,
 )
 from schemas.webhook import ResponseWebhookSchema
+from schemas.transfer import ResponseTransferSchema

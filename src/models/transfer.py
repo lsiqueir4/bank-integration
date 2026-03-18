@@ -6,7 +6,6 @@ from sqlalchemy.orm import relationship
 class Transfer(BaseModel):
     __tablename__ = "Transfer"
 
-    id = Column(Integer, primary_key=True)
     transfer_key = Column(String(36), nullable=False)
     external_id = Column(String(255), unique=True)
     account_id = Column(
