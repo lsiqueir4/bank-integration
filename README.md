@@ -11,15 +11,15 @@
 
 ## Executar testes localmente:
 
-chmod +x start.sh
-./start.sh test # subir api em ambiente de testes localmente(nao utilizar a flag 'test' vai subir a api em ambiente sandbox)
- docker compose exec api_tests bash # acessar container
-pytest # executar testes
+- chmod +x start.sh
+- ./start.sh test # subir api em ambiente de testes localmente(nao utilizar a flag 'test' vai subir a api em ambiente sandbox)
+- docker compose exec api_tests bash # acessar container
+- pytest # executar testes
 
 ## Para parar a execucao:
 
-chmod +x stop.sh
-./stop.sh
+- chmod +x stop.sh
+- ./stop.sh
 
 ## Diagrama do banco de dados:
 https://dbdiagram.io/d/69bc1876fb2db18e3bbeb7da
@@ -27,6 +27,7 @@ https://dbdiagram.io/d/69bc1876fb2db18e3bbeb7da
 ## TO DO:
 - Processamento de webhook assincrono
 - Logs e alertas para monitoramento
-- Tabelas de eventos de entidades
+- Tabelas de eventos de status das entidades
 - Autenticaçao de requests e verificaçao de assinatura dos webhooks
-- Remover chave de autenticaçao da API, utilizar secret
+- Remover chave de autenticaçao da API, utilizar secrets
+- Unificar docker-compose, utilizar ENV separadas por ambientes
