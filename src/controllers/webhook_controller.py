@@ -38,11 +38,18 @@ class WebhookController(BaseController):
         if not webhook_type:
             failure_reason = f"Unknown webhook type: {webhook_type_enumerator}"
 
-        webhook = self.webhook_repository.create_webhook(
-            webhook_data=webhook_event,
-            webhook_type=webhook_type,
-            external_id=webhook_event.get("id"),
+        webhook = self.webhook_repository.get_webhook_by_external_id(
+            external_id=webhook_event.get("id")
         )
+
+        if webhook and webhook.status.enumerator == "processed":
+            return
+        if not webhook:
+            webhook = self.webhook_repository.create_webhook(
+                webhook_data=webhook_event,
+                webhook_type=webhook_type,
+                external_id=webhook_event.get("id"),
+            )
 
         if failure_reason:
             self.webhook_repository.session.commit()

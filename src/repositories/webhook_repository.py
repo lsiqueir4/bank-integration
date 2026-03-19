@@ -29,10 +29,13 @@ class WebhookRepository(BaseRepository):
         self.session.add(webhook)
 
     def get_webhook_by_key(self, webhook_key):
-        return self.session.query(Webhook).filter_by(web=webhook_key).first()
+        return self.session.query(Webhook).filter_by(webhook_key=webhook_key).first()
 
     def get_webhook_type(self, webhook_type_enumerator):
         return self.get_enumerator(WebhookType, webhook_type_enumerator)
 
     def get_webhook_status(self, webhook_status_enumerator):
         return self.get_enumerator(WebhookStatus, webhook_status_enumerator)
+
+    def get_webhook_by_external_id(self, external_id):
+        return self.session.query(Webhook).filter_by(external_id=external_id).first()
