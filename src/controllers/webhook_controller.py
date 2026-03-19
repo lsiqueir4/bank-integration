@@ -43,7 +43,8 @@ class WebhookController(BaseController):
         )
 
         if webhook and webhook.status.enumerator == "processed":
-            return
+            return webhook
+
         if not webhook:
             webhook = self.webhook_repository.create_webhook(
                 webhook_data=webhook_event,
