@@ -38,7 +38,7 @@ class TestWebhook:
             invoice_key, "invoice_created"
         )
 
-        webhook_post_response = client.post("/webhook/", json=webhook_request_payload)
+        webhook_post_response = client.post("/webhook", json=webhook_request_payload)
 
         assert webhook_post_response.status_code == 201
 
@@ -54,7 +54,7 @@ class TestWebhook:
             invoice_key, "invoice_paid"
         )
 
-        webhook_post_response = client.post("/webhook/", json=webhook_request_payload)
+        webhook_post_response = client.post("/webhook", json=webhook_request_payload)
 
         assert webhook_post_response.status_code == 201
 
@@ -89,7 +89,7 @@ class TestWebhook:
             invoice_key, "invoice_credited"
         )
 
-        webhook_post_response = client.post("/webhook/", json=webhook_request_payload)
+        webhook_post_response = client.post("/webhook", json=webhook_request_payload)
 
         assert webhook_post_response.status_code == 201
 

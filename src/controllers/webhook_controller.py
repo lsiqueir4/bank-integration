@@ -14,7 +14,7 @@ class WebhookController(BaseController):
         super().__init__()
         self.webhook_bp = blp
         self.webhook_bp.add_url_rule(
-            "/", view_func=self.proccess_webhook, methods=["POST"]
+            "", view_func=self.proccess_webhook, methods=["POST"]
         )
         self.webhook_bp.add_url_rule(
             "/webhook_key/<webhook_key>",

@@ -15,7 +15,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: ./src/Dockerfile
+      dockerfile: ./src/dockerfile
     container_name: flask_api_stark_integration
     restart: always
     depends_on:
