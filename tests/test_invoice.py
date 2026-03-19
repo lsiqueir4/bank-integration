@@ -32,7 +32,7 @@ class TestInvoice:
                 }
             ]
         }
-        post_response = client.post("/invoice/", json=invoice_data)
+        post_response = client.post("/invoice", json=invoice_data)
         print(post_response.get_json())
 
         assert post_response.status_code == 201

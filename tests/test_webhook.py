@@ -29,7 +29,7 @@ class TestWebhook:
                 }
             ]
         }
-        invoice_post_response = client.post("/invoice/", json=invoice_data)
+        invoice_post_response = client.post("/invoice", json=invoice_data)
         print(invoice_post_response.get_json())
 
         assert invoice_post_response.status_code == 201

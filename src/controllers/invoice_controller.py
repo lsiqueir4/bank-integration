@@ -24,7 +24,7 @@ class InvoiceController(BaseController):
             methods=["GET"],
         )
         self.invoice_bp.add_url_rule(
-            "/", view_func=self.create_invoice, methods=["POST"]
+            "", view_func=self.create_invoice, methods=["POST"]
         )
         self.invoice_repository = InvoiceRepository(self.db.session)
         self.account_repository = AccountRepository(self.db.session)
