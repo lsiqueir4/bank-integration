@@ -113,7 +113,6 @@ INSERT INTO stark_integration."InvoiceStatus" ("enumerator") VALUES
 
   INSERT INTO stark_integration."TransferStatus" ("enumerator") VALUES 
   ('created'),
-  ('processing'),
   ('canceled'),
   ('failed'),
   ('success');

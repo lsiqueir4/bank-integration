@@ -21,6 +21,7 @@ def lambda_handler(event, context):
         return "".join(map(str, numbers))
 
     url = "http://13.58.112.146:5000/invoice"
+    account_key = "23943094-b466-48af-8370-d2a179957d23"
 
     invoice_list = []
     for i in range(random.randint(8, 12)):
@@ -28,7 +29,7 @@ def lambda_handler(event, context):
             "payer_document_number": generate_individual_document_number(),
             "name": str(uuid.uuid4()),
             "amount": random.randint(1, 20) * 1000,
-            "transfer_account_key": "117f2f7c-6dee-40fd-af95-3accfb05688a",
+            "transfer_account_key": account_key,
         }
         invoice_list.append(invoice_payload)
 

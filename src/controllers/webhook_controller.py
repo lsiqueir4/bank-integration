@@ -2,7 +2,7 @@ from flask_smorest import Blueprint
 from controllers import BaseController
 from errors import APIError
 from repositories import WebhookRepository
-from services import InvoiceService
+from services import InvoiceService, TransferService
 from schemas import ResponseWebhookSchema
 from flask import request
 
@@ -57,6 +57,7 @@ class WebhookController(BaseController):
         else:
             service_handler = {
                 "invoice": InvoiceService(db_session=self.db.session),
+                "transfer": TransferService(db_session=self.db.session),
             }.get(webhook_subscription)
 
             failure_reason = service_handler.process(webhook_event)

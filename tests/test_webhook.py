@@ -34,8 +34,10 @@ class TestWebhook:
 
         assert invoice_post_response.status_code == 201
 
-        webhook_request_payload = self.help_functions.test_webhook_request_payload(
-            invoice_key, "invoice_created"
+        webhook_request_payload = (
+            self.help_functions.test_invoice_webhook_request_payload(
+                invoice_key, "invoice_created"
+            )
         )
 
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
@@ -50,8 +52,10 @@ class TestWebhook:
         assert webhook_response["webhook_type"] == "invoice_created"
         assert webhook_response["status"] == "processed"
 
-        webhook_request_payload = self.help_functions.test_webhook_request_payload(
-            invoice_key, "invoice_paid"
+        webhook_request_payload = (
+            self.help_functions.test_invoice_webhook_request_payload(
+                invoice_key, "invoice_paid"
+            )
         )
 
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
@@ -85,8 +89,10 @@ class TestWebhook:
             status_code=201,
         )
 
-        webhook_request_payload = self.help_functions.test_webhook_request_payload(
-            invoice_key, "invoice_credited"
+        webhook_request_payload = (
+            self.help_functions.test_invoice_webhook_request_payload(
+                invoice_key, "invoice_credited"
+            )
         )
 
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
@@ -119,6 +125,72 @@ class TestWebhook:
 
         assert get_transfer_response.status_code == 200
         assert get_transfer_response.get_json()["status"] == "created"
+        assert get_transfer_response.get_json()["transfer_key"] == transfer_key
+        assert get_transfer_response.get_json()["amount"] == 14000
+        assert (
+            get_transfer_response.get_json()["external_id"]
+            == create_transfer_response_payload["transfers"][0]["id"]
+        )
+
+        webhook_request_payload = (
+            self.help_functions.test_transfer_webhook_request_payload(
+                transfer_key, "transfer_created"
+            )
+        )
+
+        webhook_post_response = client.post("/webhook", json=webhook_request_payload)
+
+        assert webhook_post_response.status_code == 201
+
+        webhook_response = webhook_post_response.get_json()
+        print("\n\n AQUI")
+        print(webhook_response)
+
+        assert webhook_response["failure_reason"] is None
+        assert uuid.UUID(webhook_response["webhook_key"])
+        assert webhook_response["external_id"] is not None
+        assert webhook_response["webhook_type"] == "transfer_created"
+        assert webhook_response["status"] == "processed"
+
+        webhook_request_payload = (
+            self.help_functions.test_transfer_webhook_request_payload(
+                transfer_key, "transfer_processing"
+            )
+        )
+        webhook_post_response = client.post("/webhook", json=webhook_request_payload)
+        assert webhook_post_response.status_code == 201
+
+        webhook_response = webhook_post_response.get_json()
+
+        assert webhook_response["failure_reason"] is None
+        assert uuid.UUID(webhook_response["webhook_key"])
+        assert webhook_response["external_id"] is not None
+        assert webhook_response["webhook_type"] == "transfer_processing"
+        assert webhook_response["status"] == "processed"
+
+        webhook_request_payload = (
+            self.help_functions.test_transfer_webhook_request_payload(
+                transfer_key, "transfer_success"
+            )
+        )
+        webhook_post_response = client.post("/webhook", json=webhook_request_payload)
+        assert webhook_post_response.status_code == 201
+
+        webhook_response = webhook_post_response.get_json()
+
+        assert webhook_response["failure_reason"] is None
+        assert uuid.UUID(webhook_response["webhook_key"])
+        assert webhook_response["external_id"] is not None
+        assert webhook_response["webhook_type"] == "transfer_success"
+        assert webhook_response["status"] == "processed"
+
+        get_transfer_response = client.get(
+            f"transfer/transfer_key/{transfer_key}",
+            json=invoice_data,
+        )
+
+        assert get_transfer_response.status_code == 200
+        assert get_transfer_response.get_json()["status"] == "success"
         assert get_transfer_response.get_json()["transfer_key"] == transfer_key
         assert get_transfer_response.get_json()["amount"] == 14000
         assert (

@@ -32,7 +32,7 @@ class HelpFunctions:
         mock_response["invoices"][0]["id"] = str(random.randint(1, 500) * 50)
         return mock_response
 
-    def test_webhook_request_payload(self, invoice_key, webhook_type: str):
+    def test_invoice_webhook_request_payload(self, invoice_key, webhook_type: str):
         file_name = {
             "invoice_created": "post_webhook_invoice_created",
             "invoice_paid": "post_webhook_invoice_paid",
@@ -42,6 +42,21 @@ class HelpFunctions:
         with open(f"tests/payloads/request/{file_name}.json", "r") as f:
             payload = json.load(f)
         payload["event"]["log"]["invoice"]["tags"] = [invoice_key]
+        payload["event"]["id"] = str(random.randint(1, 500) * 50)
+        return payload
+
+    def test_transfer_webhook_request_payload(self, transfer_key, webhook_type: str):
+        file_name = {
+            "transfer_created": "post_webhook_transfer_created",
+            "transfer_success": "post_webhook_transfer_success",
+            "transfer_failed": "post_webhook_transfer_failed",
+            "transfer_processing": "post_webhook_transfer_processing",
+            "transfer_canceled": "post_webhook_transfer_canceled",
+        }.get(webhook_type)
+
+        with open(f"tests/payloads/request/{file_name}.json", "r") as f:
+            payload = json.load(f)
+        payload["event"]["log"]["transfer"]["tags"] = [transfer_key]
         payload["event"]["id"] = str(random.randint(1, 500) * 50)
         return payload
 

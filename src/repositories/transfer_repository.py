@@ -18,8 +18,9 @@ class TransferRepository(BaseRepository):
 
         return new_transfer
 
-    def update_transfer(self, transfer: Transfer, external_id, status=None):
-        transfer.external_id = external_id
+    def update_transfer(self, transfer: Transfer, external_id=None, status=None):
+        if external_id:
+            transfer.external_id = external_id
         if status:
             transfer.status = self.get_enumerator(TransferStatus, status)
 
