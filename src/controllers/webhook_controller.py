@@ -31,8 +31,9 @@ class WebhookController(BaseController):
             failure_reason = "Invalid webhook data format"
 
         webhook_subscription = webhook_event.get("subscription")
+        webhook_status = webhook_event.get('log', {}).get(webhook_subscription).get("status")
         webhook_type_enumerator = (
-            f"{webhook_subscription}_{webhook_event.get('log', {}).get('type')}"
+            f"{webhook_subscription}_{webhook_status}"
         )
         webhook_type = self.webhook_repository.get_webhook_type(webhook_type_enumerator)
         if not webhook_type:

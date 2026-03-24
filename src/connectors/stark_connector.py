@@ -64,6 +64,7 @@ class StarkConnector:
         target_account_branch_code,
         target_account_account_number,
         control_key,
+        transfer_key,
         description=None,
     ):
         return {
@@ -74,6 +75,6 @@ class StarkConnector:
             "branchCode": target_account_branch_code,
             "accountNumber": target_account_account_number,
             "externalId": control_key,
-            "tags": [control_key],
+            "tags": [transfer_key],
             "displayDescription": description,
         }

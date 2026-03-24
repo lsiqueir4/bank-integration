@@ -58,6 +58,7 @@ class InvoiceService:
                     target_account_branch_code=account.branch_code,
                     target_account_account_number=account.account_number,
                     control_key=invoice.invoice_key,
+                    transfer_key=transfer.transfer_key,
                     description=f"Transfer for credited invoice: {invoice.invoice_key}",
                 )
                 transfer_response = self.stark_connector.send_transfers(
