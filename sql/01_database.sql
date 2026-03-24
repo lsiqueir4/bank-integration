@@ -135,4 +135,6 @@ INSERT INTO stark_integration."InvoiceStatus" ("enumerator") VALUES
   ('transfer_processing'),
   ('transfer_canceled'),
   ('transfer_failed'),
-  ('transfer_success');
+  ('transfer_success'),
+  ('transfer_sending'),
+  ('transfer_sent');
