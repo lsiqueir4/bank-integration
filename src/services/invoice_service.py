@@ -83,7 +83,7 @@ class InvoiceService:
         )
 
     def process(self, payload):
-        status = payload.get("log", {}).get("type")
+        status = status = payload.get("log", {}).get("invoice", {}).get("status")
         handler = {
             "paid": self.handle_invoice_paid,
             "credited": self.handle_invoice_credited,

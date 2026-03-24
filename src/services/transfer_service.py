@@ -42,7 +42,7 @@ class TransferService:
         self.transfer_repository.update_transfer(transfer, status="canceled")
 
     def process(self, payload):
-        status = payload.get("log", {}).get("type")
+        status = payload.get("log", {}).get("transfer", {}).get("status")
         handler = {
             "success": self.handle_transfer_success,
             "processing": self.handle_transfer_processing,
