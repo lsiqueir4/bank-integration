@@ -83,14 +83,14 @@ class InvoiceService:
         )
 
     def process(self, payload):
-        status = status = payload.get("log", {}).get("invoice", {}).get("status")
+        event_type = payload.get("log", {}).get("type")
         handler = {
             "paid": self.handle_invoice_paid,
             "credited": self.handle_invoice_credited,
             "created": self.handle_invoice_created,
-        }.get(status)
+        }.get(event_type)
 
         if not handler:
-            return f"Invoice status not found: {status}"
+            return f"Invoice event type not found: {event_type}"
 
         return handler(payload["log"]["invoice"])
