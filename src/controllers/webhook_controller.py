@@ -23,7 +23,7 @@ class WebhookController(BaseController):
         )
         self.webhook_repository = WebhookRepository(self.db.session)
 
-    @blp.response(201, ResponseWebhookSchema)
+    @blp.response(200, ResponseWebhookSchema)
     def proccess_webhook(self):
         webhook_event = request.get_json().get("event")
         failure_reason = ""
