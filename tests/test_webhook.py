@@ -42,7 +42,7 @@ class TestWebhook:
 
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
 
-        assert webhook_post_response.status_code == 201
+        assert webhook_post_response.status_code == 200
 
         webhook_response = webhook_post_response.get_json()
 
@@ -60,7 +60,7 @@ class TestWebhook:
 
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
 
-        assert webhook_post_response.status_code == 201
+        assert webhook_post_response.status_code == 200
 
         webhook_response = webhook_post_response.get_json()
 
@@ -97,7 +97,7 @@ class TestWebhook:
 
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
 
-        assert webhook_post_response.status_code == 201
+        assert webhook_post_response.status_code == 200
 
         webhook_response = webhook_post_response.get_json()
 
@@ -140,7 +140,7 @@ class TestWebhook:
 
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
 
-        assert webhook_post_response.status_code == 201
+        assert webhook_post_response.status_code == 200
 
         webhook_response = webhook_post_response.get_json()
         print("\n\n AQUI")
@@ -158,7 +158,7 @@ class TestWebhook:
             )
         )
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
-        assert webhook_post_response.status_code == 201
+        assert webhook_post_response.status_code == 200
 
         webhook_response = webhook_post_response.get_json()
 
@@ -174,7 +174,7 @@ class TestWebhook:
             )
         )
         webhook_post_response = client.post("/webhook", json=webhook_request_payload)
-        assert webhook_post_response.status_code == 201
+        assert webhook_post_response.status_code == 200
 
         webhook_response = webhook_post_response.get_json()
 

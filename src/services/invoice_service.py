@@ -35,7 +35,7 @@ class InvoiceService:
             return f"Credited Invoice in unexpected status: {invoice.status.enumerator}"
 
         fee_amount = invoice_data["fee"]
-        amount_to_send = invoice.amount - fee_amount
+        amount_to_send = int(invoice.amount - fee_amount)
         if invoice.transfer_account_key and amount_to_send > 0:
             account = self.account_repository.get_account_by_key(
                 invoice.transfer_account_key
@@ -51,7 +51,7 @@ class InvoiceService:
 
             try:
                 transfer_request_payload = self.stark_connector.create_transfer_payload(
-                    amount=float(amount_to_send),
+                    amount=amount_to_send,
                     receiver_document_number=account.owner_document_number,
                     receiver_name=account.owner_name,
                     target_account_bank_code=account.bank_code,
